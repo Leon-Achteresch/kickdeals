@@ -1,5 +1,12 @@
 import "./globals.css";
 import NavigationBar from "../components/navigation-bar/navigation-bar";
+import { Bebas_Neue } from 'next/font/google';
+
+const bebasneue = Bebas_Neue({
+  subsets: ['latin'],
+  weight: ['400'],
+  display: 'swap',
+});
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -17,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={bebasneue.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
         {/* <ThemeProvider
           attribute="class"
