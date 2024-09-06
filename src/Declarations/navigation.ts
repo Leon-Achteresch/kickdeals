@@ -1,14 +1,15 @@
-import React from "react";
+import { IconType } from "react-icons";
+import { FaHome, FaSearch, FaHeart, FaInfoCircle } from "react-icons/fa";
 
-type Type_NavigationList = {
+type NavigationItem = {
   name: string;
   href: string;
-  icon?: React.ReactNode;
+  icon: IconType;
 };
 
-export const NavigastionList = [
-  { name: "Home", href: "/", icon: null },
-  { name: "Deals", href: "/deals", icon: null  },
-  { name: "Profile", href: "/profile" , icon: null },
-  { name: "Settings", href: "/settings", icon: null  },
+export const NavigationList: NavigationItem[] = [
+  { name: "Home", href: "/", icon: FaHome },
+  { name: "Stöbern", href: "/deals", icon: FaSearch },
+  { name: "Favoriten", href: "/favorites", icon: FaHeart },
+  { name: "Allgemein", href: "/overview", icon: FaInfoCircle },
 ];
