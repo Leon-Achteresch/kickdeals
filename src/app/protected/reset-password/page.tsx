@@ -1,6 +1,5 @@
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
-
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default async function ResetPassword({
   searchParams,

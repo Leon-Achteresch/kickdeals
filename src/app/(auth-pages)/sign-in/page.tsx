@@ -1,6 +1,5 @@
-
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { signInAction } from "../../../actions/actions";
 
@@ -35,7 +34,6 @@ export default function Login({ searchParams }: { searchParams: any }) {
         {/* <SubmitButton pendingText="Signing In..." formAction={signInAction}>
           Sign in
         </SubmitButton> */}
-
       </div>
     </form>
   );
