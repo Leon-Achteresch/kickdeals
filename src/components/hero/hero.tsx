@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Search, Tag } from "lucide-react";
+import { BiMedal, BiPurchaseTagAlt } from "react-icons/bi";
 
 const Hero = () => {
   return (
@@ -10,11 +10,11 @@ const Hero = () => {
         Spareinlagen in hoher Geschwindigkeit!
       </p>
       <div className="flex justify-center gap-4">
-        <Button size="lg" className=" bg-defaultprimary">
-          <Search className="mr-2 h-4 w-4" /> Marken
+        <Button size="lg" className=" bg-defaultprimary text-lg">
+          <BiMedal className="mr-2 h-4 w-4" /> Marken
         </Button>
-        <Button size="lg" variant="outline">
-          <Tag className="mr-2 h-4 w-4" /> Kategorien
+        <Button size="lg" variant="outline" className="text-lg">
+          <BiPurchaseTagAlt className="mr-2 h-4 w-4" /> Kategorien
         </Button>
       </div>
     </section>
