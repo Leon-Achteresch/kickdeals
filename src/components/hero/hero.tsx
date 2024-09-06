@@ -10,7 +10,7 @@ const Hero = () => {
         Spareinlagen in hoher Geschwindigkeit!
       </p>
       <div className="flex justify-center gap-4">
-        <Button size="lg">
+        <Button size="lg" className=" bg-defaultprimary">
           <Search className="mr-2 h-4 w-4" /> Marken
         </Button>
         <Button size="lg" variant="outline">
