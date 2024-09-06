@@ -53,7 +53,9 @@ const ProductPage = () => {
         className="mt-8"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <p className="text-gray-600 text-center text1 text-xl">{product_text}</p>
+          <p className="text-gray-600 text-center text1 text-xl">
+            {product_text}
+          </p>
           <div>
             <Image
               src="/placeholder-product-image.jpg"
@@ -63,45 +65,37 @@ const ProductPage = () => {
               className="rounded-xl shadow-lg"
             />
           </div>
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Produktbeschreibung</h2>
-
-            <Tabs defaultValue="purchase" className="w-full">
-              <TabsList>
-                <TabsTrigger value="purchase">Kaufoptionen</TabsTrigger>
-                <TabsTrigger value="details">Details</TabsTrigger>
-              </TabsList>
-              <TabsContent value="purchase">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Wo kaufen?</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-4">
-                      {purchaseOptions.map((option, index) => (
-                        <Button
-                          key={index}
-                          variant="outline"
-                          onClick={() => window.open(option.url, "_blank")}
-                        >
-                          {option.name}
-                        </Button>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              <TabsContent value="details">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Produktdetails</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Hier können weitere Produktdetails angezeigt werden.</p>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+          <div className="flex flex-col gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Angebote</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col w-full gap-4">
+                  {purchaseOptions.map((option, index) => (
+                    <Button
+                      key={index}
+                      variant="outline"
+                      className="w-full justify-between"
+                      onClick={() => window.open(option.url, "_blank")}
+                    >
+                      {option.name}
+                      <span className="text-sm text-gray-600">
+                        70,00 €
+                      </span>
+                    </Button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Produktdetails</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>Hier können weitere Produktdetails angezeigt werden.</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </motion.div>
