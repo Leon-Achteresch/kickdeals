@@ -15,12 +15,15 @@ export default async function Index() {
 
       {/* Featured Deals Section */}
       <section>
-        <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-semibold mb-6 flex items-center">
+        <div className="text-2xl font-semibold mb-6 flex items-center justify-between w-full">
+          <div className="flex items-center flex-row">
             <TrendingUp className="mr-2 h-6 w-6" /> Featured Deals
-          </h2>
-          <p className="text-sm text-blue-500 cursor-pointer hover:underline">Alle anzeigen</p>
+          </div>
+          <p className="text-sm text-blue-500 items-center flex cursor-pointer hover:underline">
+            Alle anzeigen
+          </p>
         </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <FeaturedDealsCarousel />
         </div>
@@ -32,7 +35,8 @@ export default async function Index() {
           Bleibe auf dem Laufenden mit den neuesten Deals
         </h2>
         <p className="mb-4">
-          Abonniere unseren Newsletter und verpasse niemals auf exklusive Angebote!
+          Abonniere unseren Newsletter und verpasse niemals auf exklusive
+          Angebote!
         </p>
         <div className="flex gap-4">
           <Input placeholder="E-Mail-Adresse" className="flex-grow" />
