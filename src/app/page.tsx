@@ -9,15 +9,18 @@ import FeaturedDealsCarousel from "../components/featured-deals-caroussel/featur
 
 export default async function Index() {
   return (
-    <main className="flex-1 flex flex-col gap-12 px-4 py-8 max-w-6xl mx-auto w-full ">
+    <main className=" flex flex-col gap-12 px-4  max-w-6xl mx-auto w-full ">
       <Hero />
       <SearchSection />
 
       {/* Featured Deals Section */}
       <section>
-        <h2 className="text-2xl font-semibold mb-6 flex items-center">
-          <TrendingUp className="mr-2 h-6 w-6" /> Featured Deals
-        </h2>
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-semibold mb-6 flex items-center">
+            <TrendingUp className="mr-2 h-6 w-6" /> Featured Deals
+          </h2>
+          <p className="text-sm text-blue-500 cursor-pointer hover:underline">Alle anzeigen</p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <FeaturedDealsCarousel />
         </div>

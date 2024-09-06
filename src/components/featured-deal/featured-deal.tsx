@@ -14,7 +14,6 @@ const FeaturedDeal: React.FC<FeaturedDealProps> = ({
   price,
   savings,
 }) => (
-
   <Card>
     <CardHeader>
       <CardTitle>{title}</CardTitle>

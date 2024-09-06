@@ -26,11 +26,9 @@ export default function RootLayout({
           disableTransitionOnChange
         > */}
         <main className="min-h-screen flex flex-col items-center">
-          <div className="flex-1 w-full flex flex-col gap-20 items-center">
-            <NavigationBar />
-            <div className="flex flex-col gap-20 max-w-5xl p-5">{children}</div>
-            <footer className="w-full flex items-center justify-center  mx-auto text-center text-xs gap-8 py-16"></footer>
-          </div>
+          <NavigationBar />
+          <div className="flex flex-col gap-20 max-w-5xl p-5">{children}</div>
+          <footer className="w-full flex items-center justify-center  mx-auto text-center text-xs gap-8 py-16"></footer>
         </main>
         {/* </ThemeProvider> */}
       </body>
