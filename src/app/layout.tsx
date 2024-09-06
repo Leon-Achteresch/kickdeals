@@ -46,7 +46,7 @@ export default function RootLayout({
         > */}
         <main className="min-h-screen flex flex-col items-center">
           <NavigationBar />
-          <div className="flex flex-col gap-20 max-w-5xl p-5">{children}</div>
+          <div className="flex flex-col w-full">{children}</div>
           <footer className="w-full flex items-center justify-center  mx-auto text-center text-xs gap-8 py-16"></footer>
         </main>
         {/* </ThemeProvider> */}

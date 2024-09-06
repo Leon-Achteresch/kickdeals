@@ -9,8 +9,8 @@ type NavigationItem = {
 
 export const NavigationList: NavigationItem[] = [
   { name: "Home", href: "/", icon: FaHome },
-  { name: "Stöbern", href: "/deals", icon: FaSearch },
-  { name: "Angebote", href: "/offers", icon: FaPercent },
+  { name: "Stöbern", href: "/search", icon: FaSearch },
+  { name: "Angebote", href: "/deals", icon: FaPercent },
   { name: "Favoriten", href: "/favorites", icon: FaHeart },
   { name: "Allgemein", href: "/overview", icon: FaInfoCircle },
 ];

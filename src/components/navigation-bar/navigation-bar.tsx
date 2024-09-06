@@ -30,7 +30,7 @@ const NavigationBar = () => {
                 href={item.href}
                 className={clsx(
                   "flex flex-col items-center text-xl text-gray-600 hover:text-blue-600 transition-colors duration-200",
-                  { "text-defaultprimary": pathname === item.href }
+                  { "text-green-600": pathname === item.href }
                 )}
               >
                 <item.icon className="text-xl" />
@@ -40,7 +40,7 @@ const NavigationBar = () => {
           </div>
         </nav>
         <div className="h-16"></div>
-        <div className="h-16"></div>
+        {/* <div className="h-16"></div> */}
       </>
     );
   } else {

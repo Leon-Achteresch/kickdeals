@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 export default function Index() {
   return (
-    <main className="flex flex-col gap-10 px-4 max-w-6xl mx-auto w-full">
+    <main className="flex flex-col gap-10 p-6 px-4 max-w-6xl mx-auto w-full">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
