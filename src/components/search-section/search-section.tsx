@@ -5,8 +5,8 @@ const SearchSection = () => {
   return (
     <section>
       <div className="flex gap-4">
-        <Input placeholder="Search for deals..." className="flex-grow" />
-        <Button>Search</Button>
+        <Input placeholder="Suche nach Schuhe..." className="flex-grow" />
+        <Button>Suche</Button>
       </div>
     </section>
   );

@@ -11,7 +11,7 @@ const Hero = () => {
       </p>
       <div className="flex justify-center gap-4">
         <Button size="lg">
-          <Search className="mr-2 h-4 w-4" /> Finde Deals
+          <Search className="mr-2 h-4 w-4" /> Marken
         </Button>
         <Button size="lg" variant="outline">
           <Tag className="mr-2 h-4 w-4" /> Kategorien

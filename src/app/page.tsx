@@ -1,19 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
 import { TrendingUp } from "lucide-react";
-import FeaturedDeal from "../components/featured-deal/featured-deal";
 import Hero from "../components/hero/hero";
 import SearchSection from "../components/search-section/search-section";
 import FeaturedDealsCarousel from "../components/featured-deals-caroussel/featured-deals-caroussel";
+import NewsletterSection from "../components/newsletter-section/newsletter-section";
 
 export default async function Index() {
   return (
-    <main className=" flex flex-col gap-12 px-4  max-w-6xl mx-auto w-full ">
+    <main className=" flex flex-col gap-10 px-4 max-w-6xl mx-auto w-full ">
       <Hero />
       <SearchSection />
 
-      {/* Featured Deals Section */}
       <section>
         <div className="text-2xl font-semibold mb-6 flex items-center justify-between w-full">
           <div className="flex items-center flex-row">
@@ -29,20 +25,7 @@ export default async function Index() {
         </div>
       </section>
 
-      {/* Newsletter Signup */}
-      <section className="bg-muted p-8 rounded-lg">
-        <h2 className="text-2xl font-semibold mb-4">
-          Bleibe auf dem Laufenden mit den neuesten Deals
-        </h2>
-        <p className="mb-4">
-          Abonniere unseren Newsletter und verpasse niemals auf exklusive
-          Angebote!
-        </p>
-        <div className="flex gap-4">
-          <Input placeholder="E-Mail-Adresse" className="flex-grow" />
-          <Button>Subscribe</Button>
-        </div>
-      </section>
+      <NewsletterSection />
     </main>
   );
 }
