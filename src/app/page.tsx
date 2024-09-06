@@ -29,13 +29,13 @@ export default async function Index() {
       {/* Newsletter Signup */}
       <section className="bg-muted p-8 rounded-lg">
         <h2 className="text-2xl font-semibold mb-4">
-          Stay Updated on the Latest Deals
+          Bleibe auf dem Laufenden mit den neuesten Deals
         </h2>
         <p className="mb-4">
-          Subscribe to our newsletter and never miss out on exclusive offers!
+          Abonniere unseren Newsletter und verpasse niemals auf exklusive Angebote!
         </p>
         <div className="flex gap-4">
-          <Input placeholder="Enter your email" className="flex-grow" />
+          <Input placeholder="E-Mail-Adresse" className="flex-grow" />
           <Button>Subscribe</Button>
         </div>
       </section>
