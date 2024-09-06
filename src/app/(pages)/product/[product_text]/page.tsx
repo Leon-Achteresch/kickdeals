@@ -12,9 +12,10 @@ const ProductPage = () => {
   const router = useRouter();
 
   const purchaseOptions = [
-    { name: "Amazon", url: "https://amazon.com" },
-    { name: "eBay", url: "https://ebay.com" },
-    { name: "Best Buy", url: "https://bestbuy.com" },
+    { name: "Nike", url: "https://nike.com" },
+    { name: "Adidas", url: "https://adidas.com" },
+    { name: "Puma", url: "https://puma.com" },
+    { name: "New Balance", url: "https://new-balance.com" },
   ];
 
   return (
