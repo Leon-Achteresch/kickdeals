@@ -13,7 +13,7 @@ const NewsletterSection = () => {
       </p>
       <div className="flex gap-4">
         <Input placeholder="E-Mail-Adresse" className="flex-grow" />
-        <Button>Abonnieren</Button>
+        <Button className=" bg-defaultprimary">Abonnieren</Button>
       </div>
     </section>
   );

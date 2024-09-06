@@ -6,7 +6,7 @@ const SearchSection = () => {
     <section>
       <div className="flex gap-4">
         <Input placeholder="Suche nach Schuhe..." className="flex-grow" />
-        <Button>Suche</Button>
+        <Button className=" bg-defaultprimary">Suche</Button>
       </div>
     </section>
   );
