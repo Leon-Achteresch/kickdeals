@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useParams, useRouter } from "next/navigation";
-import { BiArrowBack } from "react-icons/bi";
+import { BiArrowBack, BiBell } from "react-icons/bi";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -68,7 +68,12 @@ const ProductPage = () => {
           <div className="flex flex-col gap-4">
             <Card>
               <CardHeader>
-                <CardTitle>Angebote</CardTitle>
+                <CardTitle className="flex flex-row justify-between items-center">
+                  Angebote
+                  <Button variant="outline" className="bg-transparent">
+                    <BiBell size={20} />
+                  </Button>
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col w-full gap-4">
@@ -80,9 +85,7 @@ const ProductPage = () => {
                       onClick={() => window.open(option.url, "_blank")}
                     >
                       {option.name}
-                      <span className="text-sm text-gray-600">
-                        70,00 €
-                      </span>
+                      <span className="text-sm text-gray-600">70,00 €</span>
                     </Button>
                   ))}
                 </div>
