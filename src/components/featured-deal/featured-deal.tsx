@@ -16,7 +16,7 @@ const FeaturedDeal: React.FC<FeaturedDealProps> = ({
 }) => (
   <Card>
     <CardHeader>
-      <CardTitle>{title}</CardTitle>
+      <CardTitle className="text-2xl text1 font-bold">{title}</CardTitle>
     </CardHeader>
     <CardContent>
       <p className="text-muted-foreground">{description}</p>

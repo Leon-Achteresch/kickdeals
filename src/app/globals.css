@@ -59,6 +59,10 @@
   }
 }
 
+.text1 {
+  font-family: var(--font-bebas-neue);
+}
+
 @layer base {
   * {
     @apply border-border;

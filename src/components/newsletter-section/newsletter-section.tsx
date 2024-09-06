@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 const NewsletterSection = () => {
   return (
     <section className="bg-muted p-8 rounded-lg">
-      <h2 className="text-2xl font-semibold mb-4">
+      <h2 className="text-2xl font-semibold mb-4 text1">
         Bleibe auf dem Laufenden mit den neuesten Deals
       </h2>
       <p className="mb-4">

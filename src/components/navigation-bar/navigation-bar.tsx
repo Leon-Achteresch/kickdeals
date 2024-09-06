@@ -16,7 +16,7 @@ const NavigationBar = () => {
       <>
         <nav className="fixed top-0 left-0 w-full right-0 bg-white shadow-md z-50">
           <div className="flex justify-between items-center p-4">
-            <Link href={"/"} className="text-xl font-bold text-defaultprimary">
+            <Link href={"/"} className="text-xl font-bold text-defaultprimary text1">
               KICKDEALS
             </Link>
             <UserDropdown />
@@ -49,7 +49,7 @@ const NavigationBar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Link href={"/"} className="text-xl font-bold text-green-900">
+              <Link href={"/"} className="text-xl font-bold text-green-900 text1">
                 KICKDEALS
               </Link>
             </div>

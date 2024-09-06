@@ -1,11 +1,19 @@
 import "./globals.css";
 import NavigationBar from "../components/navigation-bar/navigation-bar";
-import { Bebas_Neue } from 'next/font/google';
+import { Bebas_Neue, Roboto } from "next/font/google";
 
 const bebasneue = Bebas_Neue({
-  subsets: ['latin'],
-  weight: ['400'],
-  display: 'swap',
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  variable: "--font-bebas-neue",
+});
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  variable: "--font-Roboto",
 });
 
 const defaultUrl = process.env.VERCEL_URL
@@ -24,7 +32,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={bebasneue.className} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${bebasneue.variable} ${roboto.variable}`}
+      suppressHydrationWarning
+    >
       <body className="bg-background text-foreground">
         {/* <ThemeProvider
           attribute="class"
