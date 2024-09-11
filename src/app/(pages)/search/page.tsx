@@ -36,7 +36,7 @@ const SearchPage: React.FC = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto p-4">
-      <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">Stöbern</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center text1 text-gray-800">Stöbern</h1>
       <section className="flex gap-4 w-full mb-8">
         <Input 
           placeholder="Suche nach Schuhen..." 

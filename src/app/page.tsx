@@ -5,6 +5,7 @@ import FeaturedDealsCarousel from "../components/featured-deals-caroussel/featur
 import NewsletterSection from "../components/newsletter-section/newsletter-section";
 import { motion } from "framer-motion";
 import { BiTrendingUp } from "react-icons/bi";
+import Link from "next/link";
 
 export default function Index() {
   return (
@@ -56,6 +57,23 @@ export default function Index() {
       >
         <NewsletterSection />
       </motion.div>
+      <div>
+        <Link href={"/impressum"}>
+          <p className="text-center text-sm text-muted-foreground">
+            {" "}
+            Impressum & Kontakt{" "}
+          </p>
+        </Link>
+        <Link href={"/datenschutz"}>
+          <p className="text-center text-sm text-muted-foreground">
+            {" "}
+            Datenschutz{" "}
+          </p>
+        </Link>
+        <Link href={"/agb"}>
+          <p className="text-center text-sm text-muted-foreground"> AGB </p>
+        </Link>
+      </div>
     </main>
   );
 }
