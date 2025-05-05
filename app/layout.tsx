@@ -1,10 +1,7 @@
-import HeaderAuth from "@/components/header-auth";
 import { ThemeProvider } from "next-themes";
-import Link from "next/link";
 import "./globals.css";
 import { Roboto } from "next/font/google";
 import { Bebas_Neue } from "next/font/google";
-import { APP_NAME } from "@/lib/constants/names";
 import Navigation from "@/components/header/navigation";
 
 const defaultUrl = process.env.VERCEL_URL
