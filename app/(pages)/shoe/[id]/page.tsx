@@ -1,6 +1,13 @@
 import { faker } from "@faker-js/faker/locale/de";
 import Image from "next/image";
-import { ArrowLeft, ShoppingBag, Heart, Share2, Star } from "lucide-react";
+import {
+  ArrowLeft,
+  ShoppingBag,
+  Heart,
+  Share2,
+  Star,
+  SplitSquareVertical,
+} from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { BRANDS } from "@/lib/fakerjs/products";
@@ -146,7 +153,7 @@ export default async function ShoePage({ params }: Readonly<ShoeParams>) {
               In den Warenkorb
             </Button>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               <Button variant="outline" className="h-12 gap-2">
                 <Heart className="h-5 w-5" />
                 Merken
@@ -155,6 +162,12 @@ export default async function ShoePage({ params }: Readonly<ShoeParams>) {
                 <Share2 className="h-5 w-5" />
                 Teilen
               </Button>
+              <Link href={`/compare?product1=${params.id}`} className="w-full">
+                <Button variant="outline" className="h-12 gap-2 w-full">
+                  <SplitSquareVertical className="h-5 w-5" />
+                  Vergleichen
+                </Button>
+              </Link>
             </div>
           </div>
 
