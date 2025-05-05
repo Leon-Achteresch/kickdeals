@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { createRandomProducts } from "@/lib/fakerjs/products";
 import { faker } from "@faker-js/faker/locale/de";
@@ -14,8 +14,8 @@ import {
   Plus,
 } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 
+// Definition für CompareProduct-Typ
 type CompareProduct = {
   id: string;
   name: string;
@@ -36,7 +36,9 @@ type CompareProduct = {
   disadvantages: string[];
 };
 
-export default function ComparePage() {
+// Importiere die Komponente, die useSearchParams verwendet
+function ComparePageClient() {
+  const { useSearchParams } = require("next/navigation");
   const searchParams = useSearchParams();
 
   const [expandedSections, setExpandedSections] = useState<
@@ -516,21 +518,25 @@ export default function ComparePage() {
                     <div className="flex flex-col py-2 px-4 bg-muted/50 rounded">
                       <span className="font-medium mb-2">Extras:</span>
                       <ul className="space-y-1">
-                        {products[0].attributes.extras.map((extra, i) => (
-                          <li key={i} className="text-sm">
-                            • {extra}
-                          </li>
-                        ))}
+                        {products[0].attributes.extras.map(
+                          (extra: string, i: number) => (
+                            <li key={i} className="text-sm">
+                              • {extra}
+                            </li>
+                          )
+                        )}
                       </ul>
                     </div>
                     <div className="flex flex-col py-2 px-4 bg-muted/50 rounded">
                       <span className="font-medium mb-2">Extras:</span>
                       <ul className="space-y-1">
-                        {products[1].attributes.extras.map((extra, i) => (
-                          <li key={i} className="text-sm">
-                            • {extra}
-                          </li>
-                        ))}
+                        {products[1].attributes.extras.map(
+                          (extra: string, i: number) => (
+                            <li key={i} className="text-sm">
+                              • {extra}
+                            </li>
+                          )
+                        )}
                       </ul>
                     </div>
                   </div>
@@ -557,22 +563,26 @@ export default function ComparePage() {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col py-2 px-4 bg-green-50 dark:bg-green-950/30 rounded border border-green-200 dark:border-green-900">
                       <ul className="space-y-2">
-                        {products[0].advantages.map((adv, i) => (
-                          <li key={i} className="flex items-start">
-                            <span className="text-green-600 mr-2">✓</span>
-                            <span>{adv}</span>
-                          </li>
-                        ))}
+                        {products[0].advantages.map(
+                          (adv: string, i: number) => (
+                            <li key={i} className="flex items-start">
+                              <span className="text-green-600 mr-2">✓</span>
+                              <span>{adv}</span>
+                            </li>
+                          )
+                        )}
                       </ul>
                     </div>
                     <div className="flex flex-col py-2 px-4 bg-green-50 dark:bg-green-950/30 rounded border border-green-200 dark:border-green-900">
                       <ul className="space-y-2">
-                        {products[1].advantages.map((adv, i) => (
-                          <li key={i} className="flex items-start">
-                            <span className="text-green-600 mr-2">✓</span>
-                            <span>{adv}</span>
-                          </li>
-                        ))}
+                        {products[1].advantages.map(
+                          (adv: string, i: number) => (
+                            <li key={i} className="flex items-start">
+                              <span className="text-green-600 mr-2">✓</span>
+                              <span>{adv}</span>
+                            </li>
+                          )
+                        )}
                       </ul>
                     </div>
                   </div>
@@ -599,22 +609,26 @@ export default function ComparePage() {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col py-2 px-4 bg-red-50 dark:bg-red-950/30 rounded border border-red-200 dark:border-red-900">
                       <ul className="space-y-2">
-                        {products[0].disadvantages.map((disadv, i) => (
-                          <li key={i} className="flex items-start">
-                            <span className="text-red-600 mr-2">✗</span>
-                            <span>{disadv}</span>
-                          </li>
-                        ))}
+                        {products[0].disadvantages.map(
+                          (disadv: string, i: number) => (
+                            <li key={i} className="flex items-start">
+                              <span className="text-red-600 mr-2">✗</span>
+                              <span>{disadv}</span>
+                            </li>
+                          )
+                        )}
                       </ul>
                     </div>
                     <div className="flex flex-col py-2 px-4 bg-red-50 dark:bg-red-950/30 rounded border border-red-200 dark:border-red-900">
                       <ul className="space-y-2">
-                        {products[1].disadvantages.map((disadv, i) => (
-                          <li key={i} className="flex items-start">
-                            <span className="text-red-600 mr-2">✗</span>
-                            <span>{disadv}</span>
-                          </li>
-                        ))}
+                        {products[1].disadvantages.map(
+                          (disadv: string, i: number) => (
+                            <li key={i} className="flex items-start">
+                              <span className="text-red-600 mr-2">✗</span>
+                              <span>{disadv}</span>
+                            </li>
+                          )
+                        )}
                       </ul>
                     </div>
                   </div>
@@ -624,5 +638,23 @@ export default function ComparePage() {
           </>
         )}
     </main>
+  );
+}
+
+// Fallback für Suspense
+function LoadingComparePage() {
+  return (
+    <div className="flex flex-col items-center justify-center h-60">
+      <p>Vergleich wird geladen...</p>
+    </div>
+  );
+}
+
+// Hauptkomponente mit Suspense-Wrapper
+export default function ComparePage() {
+  return (
+    <Suspense fallback={<LoadingComparePage />}>
+      <ComparePageClient />
+    </Suspense>
   );
 }
