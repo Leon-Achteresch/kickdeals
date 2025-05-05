@@ -13,13 +13,13 @@ import { Button } from "@/components/ui/button";
 import { BRANDS } from "@/lib/fakerjs/products";
 import { RecommendedProducts } from "@/components/home/recommended-products";
 
-interface ShoeParams {
-  params: {
+interface PageProps {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default async function ShoePage({ params }: Readonly<ShoeParams>) {
+export default async function ShoePage({ params }: PageProps) {
   // Seed für konsistente Daten basierend auf ID
   const PARAMS = await params;
   faker.seed(parseInt(PARAMS.id, 36) || 123);
@@ -162,7 +162,7 @@ export default async function ShoePage({ params }: Readonly<ShoeParams>) {
                 <Share2 className="h-5 w-5" />
                 Teilen
               </Button>
-              <Link href={`/compare?product1=${params.id}`} className="w-full">
+              <Link href={`/compare?product1=${PARAMS.id}`} className="w-full">
                 <Button variant="outline" className="h-12 gap-2 w-full">
                   <SplitSquareVertical className="h-5 w-5" />
                   Vergleichen
@@ -191,7 +191,7 @@ export default async function ShoePage({ params }: Readonly<ShoeParams>) {
       </div>
 
       {/* Ähnliche Produkte */}
-      <RecommendedProducts currentProductId={params.id} />
+      <RecommendedProducts currentProductId={PARAMS.id} />
     </main>
   );
 }
