@@ -1,8 +1,14 @@
-
 import { createClient } from "@/utils/supabase/server";
 import { InfoIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 
+/**
+ * Renders a protected page accessible only to authenticated users.
+ *
+ * If the user is not authenticated, redirects to the sign-in page. Displays an informational banner and the authenticated user's details when access is granted.
+ *
+ * @returns A React element representing the protected page, or a redirect if unauthenticated.
+ */
 export default async function ProtectedPage() {
   const supabase = await createClient();
 
