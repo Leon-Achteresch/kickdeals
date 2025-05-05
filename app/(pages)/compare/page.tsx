@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { createRandomProducts } from "@/lib/fakerjs/products";
+import { faker } from "@faker-js/faker/locale/de";
 import {
   ArrowLeft,
   Star,
@@ -10,8 +11,10 @@ import {
   Share2,
   ChevronDown,
   ChevronUp,
+  Plus,
 } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 type CompareProduct = {
   id: string;
@@ -34,6 +37,8 @@ type CompareProduct = {
 };
 
 export default function ComparePage() {
+  const searchParams = useSearchParams();
+
   const [expandedSections, setExpandedSections] = useState<
     Record<string, boolean>
   >({
@@ -42,12 +47,16 @@ export default function ComparePage() {
     disadvantages: true,
   });
 
-  // Erzeuge zwei zufällige Produkte mit detaillierteren Informationen für den Vergleich
+  // Erzeuge Produkte mit detaillierteren Informationen für den Vergleich
   const [products, setProducts] = useState<CompareProduct[]>([]);
 
   useEffect(() => {
-    // Hier würden in einer echten App die Produkte aus einer URL oder dem Zustand geladen
-    // Für das Beispiel erzeugen wir zufällige Produkte
+    // Prüfe, ob Produkt-IDs in der URL vorhanden sind
+    const product1Id = searchParams.get("product1");
+    const product2Id = searchParams.get("product2");
+
+    // Hier würden in einer echten App die Produkte aus einer Datenbank geladen
+    // Für das Beispiel erzeugen wir zufällige Produkte, aber nutzen die IDs als Seeds
     const fakeMaterials = ["Synthetik", "Leder", "Mesh", "Stoff", "Wildleder"];
     const fakeWeights = ["280g", "310g", "250g", "290g", "320g"];
     const fakeSoleTypes = [
@@ -90,12 +99,18 @@ export default function ComparePage() {
       "Nicht wasserdicht",
     ];
 
-    // Erstelle 2 Produkte für den Vergleich
-    const baseProducts = createRandomProducts(2);
-    const detailedProducts: CompareProduct[] = baseProducts.map((product) => {
+    // Erstelle Produkte basierend auf den IDs in der URL
+    const detailedProducts: CompareProduct[] = [];
+
+    // Erster Produkt (immer vorhanden, wenn von der Produktseite weitergeleitet)
+    if (product1Id) {
+      faker.seed(parseInt(product1Id, 36) || 123);
+      const baseProduct = createRandomProducts(1)[0];
+
       // Zufällige Anzahl an Vorteilen und Nachteilen generieren
-      const randomAdvantages = [];
-      const randomDisadvantages = [];
+      const randomAdvantages: string[] = [];
+      const randomDisadvantages: string[] = [];
+      const randomExtras: string[] = [];
 
       // 3-5 zufällige Vorteile
       for (let i = 0; i < Math.floor(Math.random() * 3) + 3; i++) {
@@ -118,7 +133,6 @@ export default function ComparePage() {
       }
 
       // Zufällige Extras, 2-4 Stück
-      const randomExtras = [];
       for (let i = 0; i < Math.floor(Math.random() * 3) + 2; i++) {
         const extra = fakeExtras[Math.floor(Math.random() * fakeExtras.length)];
         if (!randomExtras.includes(extra)) {
@@ -126,8 +140,9 @@ export default function ComparePage() {
         }
       }
 
-      return {
-        ...product,
+      const product1: CompareProduct = {
+        ...baseProduct,
+        id: product1Id,
         attributes: {
           material:
             fakeMaterials[Math.floor(Math.random() * fakeMaterials.length)],
@@ -144,10 +159,154 @@ export default function ComparePage() {
         advantages: randomAdvantages,
         disadvantages: randomDisadvantages,
       };
-    });
+
+      detailedProducts.push(product1);
+    }
+
+    // Zweites Produkt (wenn in der URL vorhanden)
+    if (product2Id) {
+      faker.seed(parseInt(product2Id, 36) || 456);
+      const baseProduct = createRandomProducts(1)[0];
+
+      // Zufällige Anzahl an Vorteilen und Nachteilen generieren
+      const randomAdvantages: string[] = [];
+      const randomDisadvantages: string[] = [];
+      const randomExtras: string[] = [];
+
+      // 3-5 zufällige Vorteile
+      for (let i = 0; i < Math.floor(Math.random() * 3) + 3; i++) {
+        const advantage =
+          fakeAdvantages[Math.floor(Math.random() * fakeAdvantages.length)];
+        if (!randomAdvantages.includes(advantage)) {
+          randomAdvantages.push(advantage);
+        }
+      }
+
+      // 2-4 zufällige Nachteile
+      for (let i = 0; i < Math.floor(Math.random() * 2) + 2; i++) {
+        const disadvantage =
+          fakeDisadvantages[
+            Math.floor(Math.random() * fakeDisadvantages.length)
+          ];
+        if (!randomDisadvantages.includes(disadvantage)) {
+          randomDisadvantages.push(disadvantage);
+        }
+      }
+
+      // Zufällige Extras, 2-4 Stück
+      for (let i = 0; i < Math.floor(Math.random() * 3) + 2; i++) {
+        const extra = fakeExtras[Math.floor(Math.random() * fakeExtras.length)];
+        if (!randomExtras.includes(extra)) {
+          randomExtras.push(extra);
+        }
+      }
+
+      const product2: CompareProduct = {
+        ...baseProduct,
+        id: product2Id,
+        attributes: {
+          material:
+            fakeMaterials[Math.floor(Math.random() * fakeMaterials.length)],
+          weight: fakeWeights[Math.floor(Math.random() * fakeWeights.length)],
+          soleType:
+            fakeSoleTypes[Math.floor(Math.random() * fakeSoleTypes.length)],
+          closureType:
+            fakeClosures[Math.floor(Math.random() * fakeClosures.length)],
+          terrain:
+            fakeTerrains[Math.floor(Math.random() * fakeTerrains.length)],
+          extras: randomExtras,
+        },
+        rating: Math.round((Math.random() * 2 + 3) * 10) / 10, // Rating zwischen 3.0 und 5.0
+        advantages: randomAdvantages,
+        disadvantages: randomDisadvantages,
+      };
+
+      detailedProducts.push(product2);
+    }
+
+    // Wenn kein zweites Produkt, dann füge einen leeren Platzhalter hinzu
+    if (detailedProducts.length === 1 && !product2Id) {
+      detailedProducts.push({
+        id: "placeholder",
+        name: "",
+        brand: "",
+        price: 0,
+        imageSrc: "",
+        attributes: {
+          material: "",
+          weight: "",
+          soleType: "",
+          closureType: "",
+          terrain: "",
+          extras: [],
+        },
+        rating: 0,
+        advantages: [],
+        disadvantages: [],
+      });
+    }
+
+    // Fallback: Wenn keine Produkte in der URL, erzeuge zufällige Produkte wie vorher
+    if (detailedProducts.length === 0) {
+      const baseProducts = createRandomProducts(2);
+      baseProducts.forEach((product) => {
+        // Zufällige Anzahl an Vorteilen und Nachteilen generieren
+        const randomAdvantages: string[] = [];
+        const randomDisadvantages: string[] = [];
+        const randomExtras: string[] = [];
+
+        // 3-5 zufällige Vorteile
+        for (let i = 0; i < Math.floor(Math.random() * 3) + 3; i++) {
+          const advantage =
+            fakeAdvantages[Math.floor(Math.random() * fakeAdvantages.length)];
+          if (!randomAdvantages.includes(advantage)) {
+            randomAdvantages.push(advantage);
+          }
+        }
+
+        // 2-4 zufällige Nachteile
+        for (let i = 0; i < Math.floor(Math.random() * 2) + 2; i++) {
+          const disadvantage =
+            fakeDisadvantages[
+              Math.floor(Math.random() * fakeDisadvantages.length)
+            ];
+          if (!randomDisadvantages.includes(disadvantage)) {
+            randomDisadvantages.push(disadvantage);
+          }
+        }
+
+        // Zufällige Extras, 2-4 Stück
+        for (let i = 0; i < Math.floor(Math.random() * 3) + 2; i++) {
+          const extra =
+            fakeExtras[Math.floor(Math.random() * fakeExtras.length)];
+          if (!randomExtras.includes(extra)) {
+            randomExtras.push(extra);
+          }
+        }
+
+        detailedProducts.push({
+          ...product,
+          attributes: {
+            material:
+              fakeMaterials[Math.floor(Math.random() * fakeMaterials.length)],
+            weight: fakeWeights[Math.floor(Math.random() * fakeWeights.length)],
+            soleType:
+              fakeSoleTypes[Math.floor(Math.random() * fakeSoleTypes.length)],
+            closureType:
+              fakeClosures[Math.floor(Math.random() * fakeClosures.length)],
+            terrain:
+              fakeTerrains[Math.floor(Math.random() * fakeTerrains.length)],
+            extras: randomExtras,
+          },
+          rating: Math.round((Math.random() * 2 + 3) * 10) / 10, // Rating zwischen 3.0 und 5.0
+          advantages: randomAdvantages,
+          disadvantages: randomDisadvantages,
+        });
+      });
+    }
 
     setProducts(detailedProducts);
-  }, []);
+  }, [searchParams]);
 
   const toggleSection = (section: string) => {
     setExpandedSections((prev) => ({
@@ -191,7 +350,8 @@ export default function ComparePage() {
     return stars;
   };
 
-  if (products.length < 2) {
+  // Lade-Status anzeigen
+  if (products.length === 0) {
     return (
       <div className="flex items-center justify-center h-60">
         <p>Produkte werden geladen...</p>
@@ -218,222 +378,251 @@ export default function ComparePage() {
         {/* Produktbilder und Grundinformationen */}
         {products.map((product, index) => (
           <div key={product.id} className="flex flex-col">
-            <div className="rounded-lg overflow-hidden bg-muted aspect-square mb-4">
-              <img
-                src={product.imageSrc}
-                alt={product.name}
-                className="object-cover h-full w-full"
-              />
-            </div>
+            {product.id !== "placeholder" ? (
+              <>
+                <div className="rounded-lg overflow-hidden bg-muted aspect-square mb-4">
+                  <img
+                    src={product.imageSrc}
+                    alt={product.name}
+                    className="object-cover h-full w-full"
+                  />
+                </div>
 
-            <h2 className="text-xl font-bold truncate">{product.name}</h2>
-            <p className="text-muted-foreground mb-2">{product.brand}</p>
+                <h2 className="text-xl font-bold truncate">{product.name}</h2>
+                <p className="text-muted-foreground mb-2">{product.brand}</p>
 
-            <div className="flex items-center gap-1 mb-2">
-              {renderRating(product.rating)}
-              <span className="text-sm ml-1">{product.rating.toFixed(1)}</span>
-            </div>
-
-            <div className="flex items-center mb-4">
-              {product.salePrice ? (
-                <>
-                  <span className="text-lg font-bold">
-                    {product.salePrice.toFixed(2)} €
+                <div className="flex items-center gap-1 mb-2">
+                  {renderRating(product.rating)}
+                  <span className="text-sm ml-1">
+                    {product.rating.toFixed(1)}
                   </span>
-                  <span className="text-muted-foreground text-sm line-through ml-2">
-                    {product.price.toFixed(2)} €
-                  </span>
-                </>
-              ) : (
-                <span className="text-lg font-bold">
-                  {product.price.toFixed(2)} €
-                </span>
-              )}
-            </div>
+                </div>
 
-            <Button variant="default" className="w-full">
-              In den Warenkorb
-            </Button>
+                <div className="flex items-center mb-4">
+                  {product.salePrice ? (
+                    <>
+                      <span className="text-lg font-bold">
+                        {product.salePrice.toFixed(2)} €
+                      </span>
+                      <span className="text-muted-foreground text-sm line-through ml-2">
+                        {product.price.toFixed(2)} €
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-lg font-bold">
+                      {product.price.toFixed(2)} €
+                    </span>
+                  )}
+                </div>
+
+                <Button variant="default" className="w-full">
+                  In den Warenkorb
+                </Button>
+              </>
+            ) : (
+              // Platzhalter für zweites Produkt zum Hinzufügen
+              <div className="h-full flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 dark:bg-gray-900">
+                <Link
+                  href="/browse"
+                  className="w-full flex flex-col items-center gap-4"
+                >
+                  <div className="h-20 w-20 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
+                    <Plus className="h-10 w-10 text-gray-500" />
+                  </div>
+                  <p className="text-center text-gray-600 dark:text-gray-400">
+                    Zweites Produkt zum Vergleich hinzufügen
+                  </p>
+                  <Button variant="outline">Produkt auswählen</Button>
+                </Link>
+              </div>
+            )}
           </div>
         ))}
       </div>
 
-      {/* Technische Eigenschaften */}
-      <div className="mt-8 border rounded-lg overflow-hidden">
-        <div
-          className="flex items-center justify-between p-4 bg-muted cursor-pointer"
-          onClick={() => toggleSection("attributes")}
-        >
-          <h3 className="font-medium">Technische Eigenschaften</h3>
-          {expandedSections.attributes ? (
-            <ChevronUp className="h-5 w-5" />
-          ) : (
-            <ChevronDown className="h-5 w-5" />
-          )}
-        </div>
-
-        {expandedSections.attributes && (
-          <div className="p-4">
-            <div className="grid grid-cols-2 gap-4">
-              {/* Material */}
-              <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
-                <span className="font-medium">Material:</span>
-                <span>{products[0].attributes.material}</span>
-              </div>
-              <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
-                <span className="font-medium">Material:</span>
-                <span>{products[1].attributes.material}</span>
+      {/* Zeige den Vergleich nur an, wenn beide Produkte vorhanden sind */}
+      {products.length === 2 &&
+        products[0].id !== "placeholder" &&
+        products[1].id !== "placeholder" && (
+          <>
+            {/* Technische Eigenschaften */}
+            <div className="mt-8 border rounded-lg overflow-hidden">
+              <div
+                className="flex items-center justify-between p-4 bg-muted cursor-pointer"
+                onClick={() => toggleSection("attributes")}
+              >
+                <h3 className="font-medium">Technische Eigenschaften</h3>
+                {expandedSections.attributes ? (
+                  <ChevronUp className="h-5 w-5" />
+                ) : (
+                  <ChevronDown className="h-5 w-5" />
+                )}
               </div>
 
-              {/* Gewicht */}
-              <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
-                <span className="font-medium">Gewicht:</span>
-                <span>{products[0].attributes.weight}</span>
-              </div>
-              <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
-                <span className="font-medium">Gewicht:</span>
-                <span>{products[1].attributes.weight}</span>
-              </div>
+              {expandedSections.attributes && (
+                <div className="p-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* Material */}
+                    <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
+                      <span className="font-medium">Material:</span>
+                      <span>{products[0].attributes.material}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
+                      <span className="font-medium">Material:</span>
+                      <span>{products[1].attributes.material}</span>
+                    </div>
 
-              {/* Sohlentyp */}
-              <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
-                <span className="font-medium">Sohlentyp:</span>
-                <span>{products[0].attributes.soleType}</span>
-              </div>
-              <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
-                <span className="font-medium">Sohlentyp:</span>
-                <span>{products[1].attributes.soleType}</span>
-              </div>
+                    {/* Gewicht */}
+                    <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
+                      <span className="font-medium">Gewicht:</span>
+                      <span>{products[0].attributes.weight}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
+                      <span className="font-medium">Gewicht:</span>
+                      <span>{products[1].attributes.weight}</span>
+                    </div>
 
-              {/* Verschluss */}
-              <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
-                <span className="font-medium">Verschluss:</span>
-                <span>{products[0].attributes.closureType}</span>
-              </div>
-              <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
-                <span className="font-medium">Verschluss:</span>
-                <span>{products[1].attributes.closureType}</span>
-              </div>
+                    {/* Sohlentyp */}
+                    <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
+                      <span className="font-medium">Sohlentyp:</span>
+                      <span>{products[0].attributes.soleType}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
+                      <span className="font-medium">Sohlentyp:</span>
+                      <span>{products[1].attributes.soleType}</span>
+                    </div>
 
-              {/* Terrain */}
-              <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
-                <span className="font-medium">Einsatzbereich:</span>
-                <span>{products[0].attributes.terrain}</span>
-              </div>
-              <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
-                <span className="font-medium">Einsatzbereich:</span>
-                <span>{products[1].attributes.terrain}</span>
-              </div>
+                    {/* Verschluss */}
+                    <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
+                      <span className="font-medium">Verschluss:</span>
+                      <span>{products[0].attributes.closureType}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
+                      <span className="font-medium">Verschluss:</span>
+                      <span>{products[1].attributes.closureType}</span>
+                    </div>
 
-              {/* Extras */}
-              <div className="flex flex-col py-2 px-4 bg-muted/50 rounded">
-                <span className="font-medium mb-2">Extras:</span>
-                <ul className="space-y-1">
-                  {products[0].attributes.extras.map((extra, i) => (
-                    <li key={i} className="text-sm">
-                      • {extra}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex flex-col py-2 px-4 bg-muted/50 rounded">
-                <span className="font-medium mb-2">Extras:</span>
-                <ul className="space-y-1">
-                  {products[1].attributes.extras.map((extra, i) => (
-                    <li key={i} className="text-sm">
-                      • {extra}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                    {/* Terrain */}
+                    <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
+                      <span className="font-medium">Einsatzbereich:</span>
+                      <span>{products[0].attributes.terrain}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 px-4 bg-muted/50 rounded">
+                      <span className="font-medium">Einsatzbereich:</span>
+                      <span>{products[1].attributes.terrain}</span>
+                    </div>
+
+                    {/* Extras */}
+                    <div className="flex flex-col py-2 px-4 bg-muted/50 rounded">
+                      <span className="font-medium mb-2">Extras:</span>
+                      <ul className="space-y-1">
+                        {products[0].attributes.extras.map((extra, i) => (
+                          <li key={i} className="text-sm">
+                            • {extra}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="flex flex-col py-2 px-4 bg-muted/50 rounded">
+                      <span className="font-medium mb-2">Extras:</span>
+                      <ul className="space-y-1">
+                        {products[1].attributes.extras.map((extra, i) => (
+                          <li key={i} className="text-sm">
+                            • {extra}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
-      </div>
 
-      {/* Vorteile */}
-      <div className="mt-4 border rounded-lg overflow-hidden">
-        <div
-          className="flex items-center justify-between p-4 bg-muted cursor-pointer"
-          onClick={() => toggleSection("advantages")}
-        >
-          <h3 className="font-medium">Vorteile</h3>
-          {expandedSections.advantages ? (
-            <ChevronUp className="h-5 w-5" />
-          ) : (
-            <ChevronDown className="h-5 w-5" />
-          )}
-        </div>
+            {/* Vorteile */}
+            <div className="mt-4 border rounded-lg overflow-hidden">
+              <div
+                className="flex items-center justify-between p-4 bg-muted cursor-pointer"
+                onClick={() => toggleSection("advantages")}
+              >
+                <h3 className="font-medium">Vorteile</h3>
+                {expandedSections.advantages ? (
+                  <ChevronUp className="h-5 w-5" />
+                ) : (
+                  <ChevronDown className="h-5 w-5" />
+                )}
+              </div>
 
-        {expandedSections.advantages && (
-          <div className="p-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col py-2 px-4 bg-green-50 dark:bg-green-950/30 rounded border border-green-200 dark:border-green-900">
-                <ul className="space-y-2">
-                  {products[0].advantages.map((adv, i) => (
-                    <li key={i} className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span>
-                      <span>{adv}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex flex-col py-2 px-4 bg-green-50 dark:bg-green-950/30 rounded border border-green-200 dark:border-green-900">
-                <ul className="space-y-2">
-                  {products[1].advantages.map((adv, i) => (
-                    <li key={i} className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span>
-                      <span>{adv}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {expandedSections.advantages && (
+                <div className="p-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex flex-col py-2 px-4 bg-green-50 dark:bg-green-950/30 rounded border border-green-200 dark:border-green-900">
+                      <ul className="space-y-2">
+                        {products[0].advantages.map((adv, i) => (
+                          <li key={i} className="flex items-start">
+                            <span className="text-green-600 mr-2">✓</span>
+                            <span>{adv}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="flex flex-col py-2 px-4 bg-green-50 dark:bg-green-950/30 rounded border border-green-200 dark:border-green-900">
+                      <ul className="space-y-2">
+                        {products[1].advantages.map((adv, i) => (
+                          <li key={i} className="flex items-start">
+                            <span className="text-green-600 mr-2">✓</span>
+                            <span>{adv}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
-      </div>
 
-      {/* Nachteile */}
-      <div className="mt-4 border rounded-lg overflow-hidden mb-8">
-        <div
-          className="flex items-center justify-between p-4 bg-muted cursor-pointer"
-          onClick={() => toggleSection("disadvantages")}
-        >
-          <h3 className="font-medium">Nachteile</h3>
-          {expandedSections.disadvantages ? (
-            <ChevronUp className="h-5 w-5" />
-          ) : (
-            <ChevronDown className="h-5 w-5" />
-          )}
-        </div>
+            {/* Nachteile */}
+            <div className="mt-4 border rounded-lg overflow-hidden mb-8">
+              <div
+                className="flex items-center justify-between p-4 bg-muted cursor-pointer"
+                onClick={() => toggleSection("disadvantages")}
+              >
+                <h3 className="font-medium">Nachteile</h3>
+                {expandedSections.disadvantages ? (
+                  <ChevronUp className="h-5 w-5" />
+                ) : (
+                  <ChevronDown className="h-5 w-5" />
+                )}
+              </div>
 
-        {expandedSections.disadvantages && (
-          <div className="p-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col py-2 px-4 bg-red-50 dark:bg-red-950/30 rounded border border-red-200 dark:border-red-900">
-                <ul className="space-y-2">
-                  {products[0].disadvantages.map((disadv, i) => (
-                    <li key={i} className="flex items-start">
-                      <span className="text-red-600 mr-2">✗</span>
-                      <span>{disadv}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex flex-col py-2 px-4 bg-red-50 dark:bg-red-950/30 rounded border border-red-200 dark:border-red-900">
-                <ul className="space-y-2">
-                  {products[1].disadvantages.map((disadv, i) => (
-                    <li key={i} className="flex items-start">
-                      <span className="text-red-600 mr-2">✗</span>
-                      <span>{disadv}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {expandedSections.disadvantages && (
+                <div className="p-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex flex-col py-2 px-4 bg-red-50 dark:bg-red-950/30 rounded border border-red-200 dark:border-red-900">
+                      <ul className="space-y-2">
+                        {products[0].disadvantages.map((disadv, i) => (
+                          <li key={i} className="flex items-start">
+                            <span className="text-red-600 mr-2">✗</span>
+                            <span>{disadv}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="flex flex-col py-2 px-4 bg-red-50 dark:bg-red-950/30 rounded border border-red-200 dark:border-red-900">
+                      <ul className="space-y-2">
+                        {products[1].disadvantages.map((disadv, i) => (
+                          <li key={i} className="flex items-start">
+                            <span className="text-red-600 mr-2">✗</span>
+                            <span>{disadv}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
+          </>
         )}
-      </div>
     </main>
   );
 }

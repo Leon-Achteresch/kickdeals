@@ -8,6 +8,7 @@ import {
   Menu,
   ShoppingBag,
   SunMoon,
+  Cog,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -74,8 +75,8 @@ export default function MobileTabBar() {
           onClick={toggleTheme}
           className="inline-flex flex-col items-center justify-center px-5 text-muted-foreground"
         >
-          <SunMoon className="w-6 h-6" />
-          <span className="text-xs mt-1">Theme</span>
+          <Cog className="w-6 h-6" />
+          <span className="text-xs mt-1">Einstellungen</span>
         </button>
       </div>
     </nav>

@@ -19,7 +19,6 @@ const promotion = getRandomPromotion();
 const categoriesWithIcons = [
   { id: "new", name: "Neu", icon: <Timer className="h-4 w-4" /> },
   { id: "shoes", name: "Schuhe", icon: <Footprints className="h-4 w-4" /> },
-  { id: "clothing", name: "Kleidung", icon: <Shirt className="h-4 w-4" /> },
   { id: "sale", name: "Sale", icon: <ShoppingBag className="h-4 w-4" /> },
 ];
 
@@ -50,7 +49,7 @@ export default async function Home() {
 
         <div className="mb-8">
           <ProductSection
-            title="Trendige Sneaker"
+            title="Trends"
             products={trendingProducts}
             viewAllLink="/products/trending"
           />

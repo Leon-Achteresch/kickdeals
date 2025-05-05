@@ -105,7 +105,7 @@ export default async function Navigation() {
               />
             </div>
 
-            {/* Theme Toggle */}
+            {/* Einstellungen */}
             <div className="flex items-center">
               <ThemeToggle />
             </div>
