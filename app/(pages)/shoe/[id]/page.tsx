@@ -21,8 +21,7 @@ interface ShoeParams {
 
 export default async function ShoePage({ params }: Readonly<ShoeParams>) {
   // Seed für konsistente Daten basierend auf ID
-  const PARAMS = await params;
-  faker.seed(parseInt(PARAMS.id, 36) || 123);
+  faker.seed(parseInt(params.id, 36) || 123);
 
   // Generiere konsistente Schuhdaten basierend auf ID
   const brand = faker.helpers.arrayElement(BRANDS);
