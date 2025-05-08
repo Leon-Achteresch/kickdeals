@@ -50,7 +50,7 @@ export default async function Navigation() {
                     <Link href="/offers">Angebote</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
-                <NavigationMenuItem>
+                {/* <NavigationMenuItem>
                   <NavigationMenuTrigger>Marken</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
@@ -80,13 +80,13 @@ export default async function Navigation() {
                       ))}
                     </ul>
                   </NavigationMenuContent>
-                </NavigationMenuItem>
+                </NavigationMenuItem> */}
                 <NavigationMenuItem>
                   <NavigationMenuLink
                     asChild
                     className={navigationMenuTriggerStyle()}
                   >
-                    <Link href="/new">Neuheiten</Link>
+                    <Link href="/favorites">Favoriten</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
