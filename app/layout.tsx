@@ -4,6 +4,7 @@ import { Roboto } from "next/font/google";
 import { Bebas_Neue } from "next/font/google";
 import Navigation from "@/components/header/navigation";
 import { PostHogProvider } from "@/components/PostHogProvider";
+import { Toaster } from "sonner";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -62,6 +63,7 @@ export default function RootLayout({
                 </div>
               </main>
             </div>
+            <Toaster position="top-center" richColors />
           </ThemeProvider>
         </PostHogProvider>
       </body>
