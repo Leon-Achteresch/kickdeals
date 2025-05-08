@@ -3,6 +3,7 @@ import "./globals.css";
 import { Roboto } from "next/font/google";
 import { Bebas_Neue } from "next/font/google";
 import Navigation from "@/components/header/navigation";
+import { PostHogProvider } from "@/components/PostHogProvider";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -41,26 +42,28 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="bg-background text-foreground">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="flex flex-col min-h-screen w-full">
-            {/* Header-Bereich - fixiert */}
-            <div className="sticky top-0 z-40 w-full">
-              <Navigation />
-            </div>
-
-            {/* Hauptinhalt - scrollbar */}
-            <main className="flex-1 w-full overflow-y-auto px-4 sm:px-5">
-              <div className="mx-auto max-w-5xl w-full pt-6 pb-20 md:pb-10">
-                {children}
+        <PostHogProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="flex flex-col min-h-screen w-full">
+              {/* Header-Bereich - fixiert */}
+              <div className="sticky top-0 z-40 w-full">
+                <Navigation />
               </div>
-            </main>
-          </div>
-        </ThemeProvider>
+
+              {/* Hauptinhalt - scrollbar */}
+              <main className="flex-1 w-full overflow-y-auto px-4 sm:px-5">
+                <div className="mx-auto max-w-5xl w-full pt-6 pb-20 md:pb-10">
+                  {children}
+                </div>
+              </main>
+            </div>
+          </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   );
