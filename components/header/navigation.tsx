@@ -16,6 +16,15 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Input } from "@/components/ui/input";
+import { UserCircle, Settings, Heart, LogOut } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default async function Navigation() {
   const supabase = await createClient();
@@ -86,7 +95,7 @@ export default async function Navigation() {
                     asChild
                     className={navigationMenuTriggerStyle()}
                   >
-                    <Link href="/favorites">Favoriten</Link>
+                    <Link href="/news">Neuheiten</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
@@ -94,14 +103,6 @@ export default async function Navigation() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4">
-            <div className="relative hidden w-full max-w-sm md:flex">
-              <Input
-                type="search"
-                placeholder="Suche..."
-                className="w-full rounded-full"
-              />
-            </div>
-
             {/* Einstellungen */}
             <div className="flex items-center">
               <ThemeToggle />
@@ -111,26 +112,80 @@ export default async function Navigation() {
             <div className="hidden md:flex">
               {user ? (
                 <div className="flex items-center gap-4">
-                  <Button asChild size="sm" variant="outline">
-                    <Link href="/favorites">Favoriten</Link>
+                  <Button asChild size="sm" variant="outline" className="gap-1">
+                    <Link href="/favorites">
+                      <Heart className="h-4 w-4 text-primary" />
+                      <span>Favoriten</span>
+                    </Link>
                   </Button>
-                  <div className="hidden md:flex items-center gap-2">
-                    <span className="text-sm">
-                      Hey, {user.email?.split("@")[0]}!
-                    </span>
-                    <form action={signOutAction}>
-                      <Button type="submit" size="sm" variant="outline">
-                        Abmelden
+
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="gap-2 px-3 bg-background/80 border border-border hover:bg-background/90"
+                      >
+                        <div className="flex items-center gap-2">
+                          <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
+                            <UserCircle className="h-5 w-5 text-primary" />
+                          </div>
+                          <span>{user.email?.split("@")[0]}</span>
+                        </div>
                       </Button>
-                    </form>
-                  </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56 p-2">
+                      <DropdownMenuLabel className="text-xs font-normal text-muted-foreground">
+                        {user.email}
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        asChild
+                        className="gap-2 cursor-pointer"
+                      >
+                        <Link href="/profile">
+                          <UserCircle className="h-4 w-4 text-primary" />
+                          <span>Mein Profil</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        asChild
+                        className="gap-2 cursor-pointer"
+                      >
+                        <Link href="/settings">
+                          <Settings className="h-4 w-4 text-primary" />
+                          <span>Einstellungen</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        asChild
+                        className="gap-2 cursor-pointer text-red-500 focus:text-red-500"
+                      >
+                        <form action={signOutAction} className="w-full">
+                          <button
+                            type="submit"
+                            className="flex w-full items-center gap-2"
+                          >
+                            <LogOut className="h-4 w-4" />
+                            <span>Abmelden</span>
+                          </button>
+                        </form>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               ) : (
                 <div className="flex gap-2">
                   <Button asChild size="sm" variant="outline">
                     <Link href="/sign-in">Anmelden</Link>
                   </Button>
-                  <Button asChild size="sm" variant="default">
+                  <Button
+                    asChild
+                    size="sm"
+                    variant="default"
+                    className="bg-gradient-to-r from-primary to-indigo-500 hover:from-indigo-500 hover:to-primary border-none"
+                  >
                     <Link href="/sign-up">Registrieren</Link>
                   </Button>
                 </div>

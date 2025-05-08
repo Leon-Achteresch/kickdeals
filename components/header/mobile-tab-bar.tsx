@@ -28,7 +28,7 @@ export default function MobileTabBar() {
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-background border-t border-border">
-      <div className="grid h-full grid-cols-5 mx-auto">
+      <div className="grid h-full grid-cols-4 mx-auto">
         <Link
           href="/"
           className={`inline-flex flex-col items-center justify-center px-5 ${
@@ -71,7 +71,7 @@ export default function MobileTabBar() {
           <Heart className="w-6 h-6" />
           <span className="text-xs mt-1">Favoriten</span>
         </Link>
-        <Link
+        {/* <Link
           href="/settings"
           className={`inline-flex flex-col items-center justify-center px-5 ${
             pathname.startsWith("/settings")
@@ -81,7 +81,7 @@ export default function MobileTabBar() {
         >
           <Cog className="w-6 h-6" />
           <span className="text-xs mt-1">Einstellungen</span>
-        </Link>
+        </Link> */}
       </div>
     </nav>
   );
