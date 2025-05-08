@@ -10,7 +10,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "KickDeals - Die besten Angebote für Sportschuhe",
+  title: "KICKCOMPARE - Die besten Angebote für Sportschuhe",
   description:
     "Finde die besten Angebote für Sportschuhe deiner Lieblingsmarken",
 };

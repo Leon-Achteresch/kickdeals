@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { SmtpMessage } from "../smtp-message";
+import { AtSign, Lock, UserPlus } from "lucide-react";
 
 export default async function Signup(props: {
   searchParams: Promise<Message>;
@@ -20,32 +21,84 @@ export default async function Signup(props: {
 
   return (
     <>
-      <form className="flex flex-col min-w-64 max-w-64 mx-auto">
-        <h1 className="text-2xl font-medium">Sign up</h1>
-        <p className="text-sm text text-foreground">
-          Already have an account?{" "}
-          <Link className="text-primary font-medium underline" href="/sign-in">
-            Sign in
-          </Link>
-        </p>
-        <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-          <Label htmlFor="email">Email</Label>
-          <Input name="email" placeholder="you@example.com" required />
-          <Label htmlFor="password">Password</Label>
-          <Input
-            type="password"
-            name="password"
-            placeholder="Your password"
-            minLength={6}
-            required
-          />
-          <SubmitButton formAction={signUpAction} pendingText="Signing up...">
-            Sign up
-          </SubmitButton>
-          <FormMessage message={searchParams} />
+      <div className="w-full max-w-md mx-auto px-4 sm:px-0">
+        <div className="bg-card p-6 sm:p-8 rounded-xl shadow-lg border border-border/40">
+          <div className="mb-6 text-center">
+            <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-indigo-500 bg-clip-text text-transparent">
+              Registrieren
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              Bereits ein Konto?{" "}
+              <Link
+                className="text-primary font-medium hover:underline transition-all"
+                href="/sign-in"
+              >
+                Anmelden
+              </Link>
+            </p>
+          </div>
+
+          <form className="space-y-5">
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-sm font-medium">
+                E-Mail
+              </Label>
+              <div className="relative">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                  <AtSign size={18} />
+                </div>
+                <Input
+                  name="email"
+                  id="email"
+                  placeholder="du@beispiel.de"
+                  required
+                  className="pl-10 bg-background/50 border-input/50 focus:border-primary transition-all"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-sm font-medium">
+                Passwort
+              </Label>
+              <div className="relative">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                  <Lock size={18} />
+                </div>
+                <Input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Dein Passwort"
+                  minLength={6}
+                  required
+                  className="pl-10 bg-background/50 border-input/50 focus:border-primary transition-all"
+                />
+              </div>
+            </div>
+
+            <SubmitButton
+              formAction={signUpAction}
+              pendingText="Registrierung läuft..."
+              className="group relative w-full py-3 bg-gradient-to-r from-primary to-indigo-500 hover:from-indigo-500 hover:to-primary text-white font-medium shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden"
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                <UserPlus
+                  size={18}
+                  className="group-hover:-translate-y-1 transition-transform duration-300"
+                />
+                <span className="group-hover:translate-y-0 transition-transform duration-300">
+                  Registrieren
+                </span>
+              </span>
+              <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+            </SubmitButton>
+
+            <FormMessage message={searchParams} />
+          </form>
         </div>
-      </form>
-      <SmtpMessage />
+      </div>
+      {/* <SmtpMessage /> */}
     </>
   );
 }

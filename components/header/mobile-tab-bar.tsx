@@ -28,7 +28,7 @@ export default function MobileTabBar() {
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-background border-t border-border">
-      <div className="grid h-full grid-cols-5 mx-auto">
+      <div className="grid h-full grid-cols-4 mx-auto">
         <Link
           href="/"
           className={`inline-flex flex-col items-center justify-center px-5 ${
@@ -39,15 +39,15 @@ export default function MobileTabBar() {
           <span className="text-xs mt-1">Home</span>
         </Link>
         <Link
-          href="/search"
+          href="/browse"
           className={`inline-flex flex-col items-center justify-center px-5 ${
-            pathname.startsWith("/search")
+            pathname.startsWith("/browse")
               ? "text-primary"
               : "text-muted-foreground"
           }`}
         >
           <SearchIcon className="w-6 h-6" />
-          <span className="text-xs mt-1">Suche</span>
+          <span className="text-xs mt-1">Stöbern</span>
         </Link>
         <Link
           href="/offers"
@@ -71,13 +71,17 @@ export default function MobileTabBar() {
           <Heart className="w-6 h-6" />
           <span className="text-xs mt-1">Favoriten</span>
         </Link>
-        <button
-          onClick={toggleTheme}
-          className="inline-flex flex-col items-center justify-center px-5 text-muted-foreground"
+        {/* <Link
+          href="/settings"
+          className={`inline-flex flex-col items-center justify-center px-5 ${
+            pathname.startsWith("/settings")
+              ? "text-primary"
+              : "text-muted-foreground"
+          }`}
         >
           <Cog className="w-6 h-6" />
           <span className="text-xs mt-1">Einstellungen</span>
-        </button>
+        </Link> */}
       </div>
     </nav>
   );
